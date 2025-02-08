@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抓到你了!!!</title>
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 引入mp4box.js -->
+    <script src="https://cdn.jsdelivr.net/npm/mp4box@latest/dist/mp4box.all.min.js"></script>
+    <!-- 引入Google字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://pic1.zhimg.com/v2-e56048f1fb2ddf0d5e456da259f002b2_r.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #000;
+            min-height: 200vh; /* 延长网页的拖动长度 */
+            position: relative; /* 添加相对定位 */
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0);
+            color: #000;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: rgba(0, 0, 0, 0);
+            padding: 10px 0;
+        }
+        nav a {
+            color: #000;
+            text-decoration: none;
+            padding: 0 20px;
+            display: inline-block;
+        }
+        .container {
+            padding: 20px;
+        }
+        .social-icons {
+            position: fixed; /* 固定位置 */
+            top: 50%; /* 垂直居中 */
+            transform: translateY(-50%);
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* 图标间距 */
+        }
+        .social-icons a {
+            margin: 0;
+            color: #000;
+            text-decoration: none;
+            font-size: 32px; /* 图标大小增加 */
+        }
+        .social-icons a.github {
+            color: black;
+        }
+        .social-icons a.bilibili {
+            color: #add8e6;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .gallery img {
+            width: 200px;
+            height: 150px;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .video-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+        video {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .upload-download-section, .mp4box-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+        footer {
+            background-color: rgba(0, 0, 0, 0);
+            color: #000;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: rgba(255, 255, 255, 0.8);
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 80%;
+            max-width: 400px;
+        }
+        .close {
+            color: #000;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover, .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        @media (max-width: 600px) {
+            .modal-content {
+                width: 90%;
+                margin-top: 20%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>抓到你了!!!!</h1>
+    <p>欢迎来到我的博客！</p>
+</header>
+
+<nav>
+    <a href="#" id="about-btn">关于我</a>
+    <a href="#" id="gallery-btn">图片展示</a>
+    <a href="#" id="video-btn">视频播放</a>
+    <a href="#" id="contact-btn">联系我</a>
+    <a href="music.html" target="_blank">音乐播放</a>
+</nav>
+
+<div class="social-icons">
+    <a href="https://github.com/SYSTEM-LEGSP-CPD/LEGSP" target="_blank" class="github">
+        <i class="fab fa-github"></i>
+    </a>
+    <a href="https://space.bilibili.com/1614911881?spm_id_from=333.1007.0.0" target="_blank" class="bilibili">
+        <i class="fab fa-bilibili"></i>
+    </a>
+</div>
+
+<div id="welcome-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="welcome-close-btn">&times;</span>
+        <h2>欢迎来到我的个人博客！</h2>
+        <p>感谢你访问，希望你能在这里找到有趣的内容。</p>
+    </div>
+</div>
+
+<div id="about-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="about-close-btn">&times;</span>
+        <h2>关于我</h2>
+        <p>这里是关于我的内容。</p>
+        <p>你可以通过以下方式联系我：</p>
+        <p>邮箱：3572653147@qq.com</p>
+        <p>微信：LVMPD80267</p>
+    </div>
+</div>
+
+<div id="gallery-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="gallery-close-btn">&times;</span>
+        <h2>图片展示</h2>
+        <div class="gallery">
+            <img src="https://c-ssl.duitang.com/uploads/blog/202202/11/20220211225436_f6156.jpg" alt="洛天依图片1">
+            <img src="https://img-baofun.zhhainiao.com/fs/e64c2ab80517e98a1672331e9e0f60ca.jpg" alt="洛天依图片2">
+            <img src="https://unsignedzhang.cn/wp-content/uploads/2020/04/143c6eaeedf89ecf08039a4d3a36bd701.jpg" alt="洛天依图片3">
+            <img src="https://img-baofun.zhhainiao.com/pcwallpaper_ugc/static/92e9240c95caea73c7f3ff301c8925fa.jpg" alt="洛天依图片4">
+            <img src="https://pic3.zhimg.com/v2-02374651a686d058cc26b7a9f5958fc2_r.jpg" alt="洛天依图片5">
+            <img src="https://pic1.zhimg.com/v2-95bf7651044370a9ef4e9ea25dfe943f_r.jpg" alt="洛天依图片6">
+        </div>
+    </div>
+</div>
+
+<div id="video-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="video-close-btn">&times;</span>
+        <h2>视频播放</h2>
+        <div class="video-section">
+            <video controls>
+                <source src="https://example.com/video1.mp4" type="video/mp4">
+                你的浏览器不支持视频播放。
+            </video>
+        </div>
+        <p>如果视频无法播放，请确保视频文件是H.264编码格式。</p>
+    </div>
+</div>
+
+<div id="contact-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="contact-close-btn">&times;</span>
+        <h2>联系我</h2>
+        <form action="https://example.com/submit-form" method="post" enctype="multipart/form-data">
+            <label for="name">姓名：</label>
+            <input type="text" id="name" name="name" required><br><br>
+            <label for="email">邮箱：</label>
+            <input type="email" id="email" name="email" required><br><br>
+            <label for="message">留言：</label>
+            <textarea id="message" name="message" rows="4" required></textarea><br><br>
+            <label for="file">上传文件：</label>
+            <input type="file" id="file" name="file"><br><br>
+            <button type="submit">提交</button>
+        </form>
+        <p>下载文件：<a href="https://example.com/download" download>点击下载</a></p>
+    </div>
+</div>
+
+<!-- 将“上传和下载文件”和“MP4Box.js 示例”移动到页面底部 -->
+<div class="upload-download-section">
+    <h2>上传和下载文件</h2>
+    <form action="https://example.com/upload" method="post" enctype="multipart/form-data">
+        <label for="upload-file">上传文件：</label>
+        <input type="file" id="upload-file" name="upload-file" required><br><br>
+        <button type="submit">上传</button>
+    </form>
+    <p>下载文件：<a href="https://example.com/download" download>点击下载</a></p>
+</div>
+
+<div class="mp4box-section">
+    <h2>MP4Box.js 示例</h2>
+    <input type="file" id="mp4box-file" accept="video/mp4">
+    <button id="mp4box-parse-btn">解析MP4文件</button>
+    <div id="mp4box-output"></div>
+</div>
+
+<footer>
+    <p>&copy; 2025 SYSTEM-LEGSP-CPD拥有所有</p>
+</footer>
+
+<script>
+    document.getElementById("about-btn").addEventListener("click", function() {
+        document.getElementById("about-modal").style.display = "block";
+    });
+    document.getElementById("gallery-btn").addEventListener("click", function() {
+        document.getElementById("gallery-modal").style.display = "block";
+    });
+    document.getElementById("video-btn").addEventListener("click", function() {
+        document.getElementById("video-modal").style.display = "block";
+    });
+    document.getElementById("contact-btn").addEventListener("click", function() {
+        document.getElementById("contact-modal").style.display = "block";
+    });
+
+    document.querySelectorAll(".close").forEach(function(closeBtn) {
+        closeBtn.addEventListener("click", function() {
+            this.parentElement.parentElement.style.display = "none";
+        });
+    });
+
+    window.onload = function() {
+        document.getElementById("welcome-modal").style.display = "block";
+    };
+
+    window.onclick = function(event) {
+        if (event.target.classList.contains("modal")) {
+            event.target.style.display = "none";
+        }
+    };
+
+    // MP4Box.js 示例
+    document.getElementById("mp4box-parse-btn").addEventListener("click", function() {
+        const fileInput = document.getElementById("mp4box-file");
+        const file = fileInput.files[0];
+        if (!file) {
+            alert("请选择一个MP4文件！");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const arrayBuffer = event.target.result;
+            const mp4boxOutput = document.getElementById("mp4box-output");
+
+            MP4Box.createFile(arrayBuffer, function(file) {
+                mp4boxOutput.innerHTML = `<p>文件解析成功！</p>`;
+                mp4boxOutput.innerHTML += `<p>文件名：${file.name}</p>`;
+                mp4boxOutput.innerHTML += `<p>时长：${file.duration}秒</p>`;
+                mp4boxOutput.innerHTML += `<p>视频轨道：${file.videoTracks.length}</p>`;
+                mp4boxOutput.innerHTML += `<p>音频轨道：${file.audioTracks.length}</p>`;
+            }, function(error) {
+                mp4boxOutput.innerHTML = `<p>文件解析失败：${error}</p>`;
+            });
+        };
+        reader.readAsArrayBuffer(file);
+    });
+</script>
+</body>
+</html>
