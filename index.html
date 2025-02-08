@@ -130,9 +130,18 @@
             text-decoration: none;
             cursor: pointer;
         }
-        @media (max-width: 600px) {
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .social-icons {
+                display: none; /* 在小屏幕上隐藏社交图标 */
+            }
+            .gallery img {
+                width: 100%; /* 在小屏幕上图片宽度占满屏幕 */
+                height: auto;
+            }
             .modal-content {
-                width: 90%;
+                width: 90%; /* 在小屏幕上弹窗宽度占满屏幕 */
                 margin-top: 20%;
             }
         }
@@ -141,16 +150,16 @@
 <body>
 
 <header>
-    <h1>抓到你了!!!!</h1>
+    <h1>欢迎！</h1>
     <p>欢迎来到我的博客！</p>
 </header>
 
 <nav>
     <a href="#" id="about-btn">关于我</a>
-    <a href="#" id="gallery-btn">图片展示</a>
-    <a href="#" id="video-btn">视频播放</a>
+    <a href="#" id="gallery-btn">图片展示(无)</a>
+    <a href="#" id="video-btn">视频播放(开发中)</a>
     <a href="#" id="contact-btn">联系我</a>
-    <a href="music.html" target="_blank">音乐播放</a>
+    <a href="#" id="music-btn">音乐播放(开发中)</a>
 </nav>
 
 <div class="social-icons">
@@ -176,22 +185,23 @@
         <h2>关于我</h2>
         <p>这里是关于我的内容。</p>
         <p>你可以通过以下方式联系我：</p>
-        <p>邮箱：3572653147@qq.com</p>
+        <p>邮箱：gsp80267@gmail.com</p>
         <p>微信：LVMPD80267</p>
+        <p>QQ：3572653147</p>
     </div>
 </div>
 
 <div id="gallery-modal" class="modal">
     <div class="modal-content">
         <span class="close" id="gallery-close-btn">&times;</span>
-        <h2>图片展示</h2>
+        <h2>图片展示(没考虑到放什么)</h2>
         <div class="gallery">
-            <img src="https://c-ssl.duitang.com/uploads/blog/202202/11/20220211225436_f6156.jpg" alt="洛天依图片1">
-            <img src="https://img-baofun.zhhainiao.com/fs/e64c2ab80517e98a1672331e9e0f60ca.jpg" alt="洛天依图片2">
-            <img src="https://unsignedzhang.cn/wp-content/uploads/2020/04/143c6eaeedf89ecf08039a4d3a36bd701.jpg" alt="洛天依图片3">
-            <img src="https://img-baofun.zhhainiao.com/pcwallpaper_ugc/static/92e9240c95caea73c7f3ff301c8925fa.jpg" alt="洛天依图片4">
-            <img src="https://pic3.zhimg.com/v2-02374651a686d058cc26b7a9f5958fc2_r.jpg" alt="洛天依图片5">
-            <img src="https://pic1.zhimg.com/v2-95bf7651044370a9ef4e9ea25dfe943f_r.jpg" alt="洛天依图片6">
+            <img src="" alt="图片1">
+            <img src="" alt="图片2">
+            <img src="" alt="图片3">
+            <img src="" alt="图片4">
+            <img src="" alt="图片5">
+            <img src="" alt="图片6">
         </div>
     </div>
 </div>
@@ -199,7 +209,7 @@
 <div id="video-modal" class="modal">
     <div class="modal-content">
         <span class="close" id="video-close-btn">&times;</span>
-        <h2>视频播放</h2>
+        <h2>视频播放(开发中...)</h2>
         <div class="video-section">
             <video controls>
                 <source src="https://example.com/video1.mp4" type="video/mp4">
@@ -229,26 +239,84 @@
     </div>
 </div>
 
-<!-- 将“上传和下载文件”和“MP4Box.js 示例”移动到页面底部 -->
-<div class="upload-download-section">
-    <h2>上传和下载文件</h2>
-    <form action="https://example.com/upload" method="post" enctype="multipart/form-data">
-        <label for="upload-file">上传文件：</label>
-        <input type="file" id="upload-file" name="upload-file" required><br><br>
-        <button type="submit">上传</button>
-    </form>
-    <p>下载文件：<a href="https://example.com/download" download>点击下载</a></p>
+<div id="music-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="music-close-btn">&times;</span>
+        <h2>音乐播放</h2>
+        <div class="music-section">
+            <audio controls>
+                <source src="https://example.com/music1.mp3" type="audio/mpeg">
+                你的浏览器不支持音频播放。
+            </audio>
+        </div>
+        <p>如果音乐无法播放，请确保音频文件是MP3格式。</p>
+    </div>
 </div>
 
-<div class="mp4box-section">
-    <h2>MP4Box.js 示例</h2>
-    <input type="file" id="mp4box-file" accept="video/mp4">
-    <button id="mp4box-parse-btn">解析MP4文件</button>
-    <div id="mp4box-output"></div>
+<!-- 将“关于我”、“视频播放”、“联系我”和“音乐播放”移动到页面底部 -->
+<div class="bottom-section">
+    <div id="about-section" class="modal">
+        <div class="modal-content">
+            <span class="close" id="about-close-btn">&times;</span>
+            <h2>关于我</h2>
+            <p>这里是关于我的内容。</p>
+            <p>你可以通过以下方式联系我：</p>
+            <p>邮箱：gsp80267@gmail.com</p>
+            <p>微信：LVMPD80267</p>
+            <p>QQ：3572653147</p>
+        </div>
+    </div>
+
+    <div id="video-section" class="modal">
+        <div class="modal-content">
+            <span class="close" id="video-close-btn">&times;</span>
+            <h2>视频播放(开发中...)</h2>
+            <div class="video-section">
+                <video controls>
+                    <source src="https://example.com/video1.mp4" type="video/mp4">
+                    你的浏览器不支持视频播放。
+                </video>
+            </div>
+            <p>如果视频无法播放，请确保视频文件是H.264编码格式。</p>
+        </div>
+    </div>
+
+    <div id="contact-section" class="modal">
+        <div class="modal-content">
+            <span class="close" id="contact-close-btn">&times;</span>
+            <h2>联系我</h2>
+            <form action="https://example.com/submit-form" method="post" enctype="multipart/form-data">
+                <label for="name">姓名：</label>
+                <input type="text" id="name" name="name" required><br><br>
+                <label for="email">邮箱：</label>
+                <input type="email" id="email" name="email" required><br><br>
+                <label for="message">留言：</label>
+                <textarea id="message" name="message" rows="4" required></textarea><br><br>
+                <label for="file">上传文件：</label>
+                <input type="file" id="file" name="file"><br><br>
+                <button type="submit">提交</button>
+            </form>
+            <p>下载文件：<a href="https://example.com/download" download>点击下载</a></p>
+        </div>
+    </div>
+
+    <div id="music-section" class="modal">
+        <div class="modal-content">
+            <span class="close" id="music-close-btn">&times;</span>
+            <h2>音乐播放</h2>
+            <div class="music-section">
+                <audio controls>
+                    <source src="https://example.com/music1.mp3" type="audio/mpeg">
+                    你的浏览器不支持音频播放。
+                </audio>
+            </div>
+            <p>如果音乐无法播放，请确保音频文件是MP3格式。</p>
+        </div>
+    </div>
 </div>
 
 <footer>
-    <p>&copy; 2025 SYSTEM-LEGSP-CPD拥有所有</p>
+    <p>&copy; 2025 SYSTEM-LEGSP-CPD归所有</p>
 </footer>
 
 <script>
@@ -263,6 +331,9 @@
     });
     document.getElementById("contact-btn").addEventListener("click", function() {
         document.getElementById("contact-modal").style.display = "block";
+    });
+    document.getElementById("music-btn").addEventListener("click", function() {
+        document.getElementById("music-modal").style.display = "block";
     });
 
     document.querySelectorAll(".close").forEach(function(closeBtn) {
@@ -281,7 +352,7 @@
         }
     };
 
-    // MP4Box.js 示例
+    // MP4Box 示例
     document.getElementById("mp4box-parse-btn").addEventListener("click", function() {
         const fileInput = document.getElementById("mp4box-file");
         const file = fileInput.files[0];
