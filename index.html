@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>抓到你了!!!</title>
+    <title>清新博客</title>
     <!-- 引入Font Awesome图标库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- 引入mp4box.js -->
-    <script src="https://cdn.jsdelivr.net/npm/mp4box@latest/dist/mp4box.all.min.js"></script>
     <!-- 引入Google字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -15,94 +13,52 @@
             font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('https://pic1.zhimg.com/v2-e56048f1fb2ddf0d5e456da259f002b2_r.jpg');
-            background-size: cover;
-            background-position: center;
-            color: #000;
-            min-height: 200vh; /* 延长网页的拖动长度 */
-            position: relative; /* 添加相对定位 */
+            background-color: #f0f8ff; /* 淡蓝色背景 */
+            color: #333; /* 深灰色文字 */
+            min-height: 200vh;
+            position: relative;
         }
-        header {
-            background-color: rgba(0, 0, 0, 0);
-            color: #000;
+        /* 按钮样式 */
+        #menu-toggle {
+            background: #333;
+            color: white;
             padding: 10px 20px;
-            text-align: center;
-        }
-        nav {
-            background-color: rgba(0, 0, 0, 0);
-            padding: 10px 0;
-        }
-        nav a {
-            color: #000;
-            text-decoration: none;
-            padding: 0 20px;
-            display: inline-block;
-        }
-        .container {
-            padding: 20px;
-        }
-        .social-icons {
-            position: fixed; /* 固定位置 */
-            top: 50%; /* 垂直居中 */
-            transform: translateY(-50%);
-            left: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 10px; /* 图标间距 */
-        }
-        .social-icons a {
-            margin: 0;
-            color: #000;
-            text-decoration: none;
-            font-size: 32px; /* 图标大小增加 */
-        }
-        .social-icons a.github {
-            color: black;
-        }
-        .social-icons a.bilibili {
-            color: #add8e6;
-        }
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        .gallery img {
-            width: 200px;
-            height: 150px;
-            margin: 10px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        .video-section {
-            text-align: center;
-            margin: 20px 0;
-        }
-        video {
-            width: 100%;
-            max-width: 600px;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        .upload-download-section, .mp4box-section {
-            text-align: center;
-            margin: 20px 0;
-        }
-        footer {
-            background-color: rgba(0, 0, 0, 0);
-            color: #000;
-            text-align: center;
-            padding: 10px 0;
+            border: none;
+            cursor: pointer;
             position: fixed;
-            width: 100%;
-            bottom: 0;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
         }
+        /* 隐藏弹出菜单 */
+        .popup-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 200px;
+        }
+        .popup-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .popup-menu li {
+            padding: 10px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .popup-menu li:hover {
+            background-color: #f5f5f5;
+        }
+        /* 弹窗样式 */
         .modal {
             display: none;
             position: fixed;
-            z-index: 1;
+            z-index: 1001;
             left: 0;
             top: 0;
             width: 100%;
@@ -111,151 +67,129 @@
             background-color: rgba(0, 0, 0, 0.4);
         }
         .modal-content {
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: #fefefe;
             margin: 15% auto;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border: 1px solid #888;
             width: 80%;
             max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
         .close {
-            color: #000;
+            color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
         .close:hover, .close:focus {
-            color: #000;
+            color: black;
             text-decoration: none;
             cursor: pointer;
         }
-
+        /* 主内容区 */
+        .main-content {
+            padding: 20px;
+        }
+        header {
+            background-color: rgba(255, 255, 255, 0.9); /* 半透明背景 */
+            color: #333; /* 深灰色文字 */
+            padding: 20px 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+        }
+        footer {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+            text-align: center;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+        }
         /* 响应式设计 */
         @media (max-width: 768px) {
-            .social-icons {
-                display: none; /* 在小屏幕上隐藏社交图标 */
+            #menu-toggle {
+                left: 10px;
             }
-            .gallery img {
-                width: 100%; /* 在小屏幕上图片宽度占满屏幕 */
-                height: auto;
+            .popup-menu {
+                left: 10px;
+                width: calc(100% - 20px);
             }
-            .modal-content {
-                width: 90%; /* 在小屏幕上弹窗宽度占满屏幕 */
-                margin-top: 20%;
-            }
+        }
+        /* 视频播放样式 */
+        .video-section {
+            margin-top: 20px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        /* 日期时间显示样式 */
+        .date-time-section {
+            margin-top: 20px;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
-
-<header>
-    <h1>欢迎！</h1>
-    <p>欢迎来到我的博客！</p>
-</header>
-
-<nav>
-    <a href="#" id="about-btn">关于我</a>
-    <a href="#" id="gallery-btn">图片展示(无)</a>
-    <a href="#" id="video-btn">视频播放(开发中)</a>
-    <a href="#" id="contact-btn">联系我</a>
-    <a href="#" id="music-btn">音乐播放(开发中)</a>
-</nav>
-
-<div class="social-icons">
-    <a href="https://github.com/SYSTEM-LEGSP-CPD/LEGSP" target="_blank" class="github">
-        <i class="fab fa-github"></i>
-    </a>
-    <a href="https://space.bilibili.com/1614911881?spm_id_from=333.1007.0.0" target="_blank" class="bilibili">
-        <i class="fab fa-bilibili"></i>
-    </a>
-</div>
-
-<div id="welcome-modal" class="modal">
-    <div class="modal-content">
-        <span class="close" id="welcome-close-btn">&times;</span>
-        <h2>欢迎来到我的个人博客！</h2>
-        <p>感谢你访问，希望你能在这里找到有趣的内容。</p>
+    <!-- 菜单按钮 -->
+    <button id="menu-toggle">菜单</button>
+    <!-- 弹出菜单 -->
+    <div class="popup-menu" id="popup-menu">
+        <ul>
+            <li><a href="#" id="about-link">关于我</a></li>
+            <li><a href="#" id="gallery-link">图片展示</a></li>
+            <li><a href="#" id="video-link">视频播放</a></li>
+            <li><a href="#" id="contact-link">联系我</a></li>
+            <li><a href="#" id="music-link">音乐播放</a></li>
+            <li><a href="#" id="essay-link">作文编辑</a></li>
+            <li><a href="#" id="download-link">下载</a></li>
+            <li><a href="#" id="team-link">制作人员名单</a></li>
+        </ul>
     </div>
-</div>
-
-<div id="about-modal" class="modal">
-    <div class="modal-content">
-        <span class="close" id="about-close-btn">&times;</span>
-        <h2>关于我</h2>
-        <p>这里是关于我的内容。</p>
-        <p>你可以通过以下方式联系我：</p>
-        <p>邮箱：gsp80267@gmail.com</p>
-        <p>微信：LVMPD80267</p>
-        <p>QQ：3572653147</p>
-    </div>
-</div>
-
-<div id="gallery-modal" class="modal">
-    <div class="modal-content">
-        <span class="close" id="gallery-close-btn">&times;</span>
-        <h2>图片展示(没考虑到放什么)</h2>
-        <div class="gallery">
-            <img src="" alt="图片1">
-            <img src="" alt="图片2">
-            <img src="" alt="图片3">
-            <img src="" alt="图片4">
-            <img src="" alt="图片5">
-            <img src="" alt="图片6">
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <header>
+            <h1>欢迎！</h1>
+            <p>欢迎来到我的清新博客！</p>
+        </header>
+        <div class="social-icons">
+            <a href="https://github.com/SYSTEM-LEGSP-CPD/LEGSP" target="_blank" class="github">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://space.bilibili.com/1614911881?spm_id_from=333.1007.0.0" target="_blank" class="bilibili">
+                <i class="fab fa-bilibili"></i>
+            </a>
         </div>
-    </div>
-</div>
-
-<div id="video-modal" class="modal">
-    <div class="modal-content">
-        <span class="close" id="video-close-btn">&times;</span>
-        <h2>视频播放(开发中...)</h2>
+        <!-- 视频播放 -->
         <div class="video-section">
-            <video controls>
-                <source src="https://example.com/video1.mp4" type="video/mp4">
-                你的浏览器不支持视频播放。
+            <h2>视频播放</h2>
+            <video src="video/video.mp4" width="700" height="400" controls autoplay>
+                <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,19,0" width="700" height="400">
+                    <param name="movie" value="Flvplayer.swf" />
+                    <param name="quality" value="high" />
+                    <param name="allowFullScreen" value="true" />
+                    <param name="FlashVars" value="vcastr_file=video/video.mp4&LogoText=test" />
+                    <embed src="Flvplayer.swf" allowfullscreen="true" flashvars="vcastr_file=video/video.mp4&LogoText=test" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="700" height="400"></embed>
+                </object>
             </video>
         </div>
-        <p>如果视频无法播放，请确保视频文件是H.264编码格式。</p>
-    </div>
-</div>
-
-<div id="contact-modal" class="modal">
-    <div class="modal-content">
-        <span class="close" id="contact-close-btn">&times;</span>
-        <h2>联系我</h2>
-        <form action="https://example.com/submit-form" method="post" enctype="multipart/form-data">
-            <label for="name">姓名：</label>
-            <input type="text" id="name" name="name" required><br><br>
-            <label for="email">邮箱：</label>
-            <input type="email" id="email" name="email" required><br><br>
-            <label for="message">留言：</label>
-            <textarea id="message" name="message" rows="4" required></textarea><br><br>
-            <label for="file">上传文件：</label>
-            <input type="file" id="file" name="file"><br><br>
-            <button type="submit">提交</button>
-        </form>
-        <p>下载文件：<a href="https://example.com/download" download>点击下载</a></p>
-    </div>
-</div>
-
-<div id="music-modal" class="modal">
-    <div class="modal-content">
-        <span class="close" id="music-close-btn">&times;</span>
-        <h2>音乐播放</h2>
-        <div class="music-section">
-            <audio controls>
-                <source src="https://example.com/music1.mp3" type="audio/mpeg">
-                你的浏览器不支持音频播放。
-            </audio>
+        <!-- 日期时间显示 -->
+        <div class="date-time-section">
+            <h2>日期与时间</h2>
+            <div id="calendarClock1" style="font-family:宋体;font-size:9pt"></div>
+            <div id="calendarClock2" style="font-family:Arial;font-size:14pt;Line-Height=100%"></div>
+            <div id="calendarClock3" style="font-family:宋体;font-size:9pt;Line-Height=100%"></div>
+            <div id="calendarClock4" style="color:#000000;font-family:Arial;font-size:8pt;Line-Height=100%"><b></b></div>
         </div>
-        <p>如果音乐无法播放，请确保音频文件是MP3格式。</p>
     </div>
-</div>
-
-<!-- 将“关于我”、“视频播放”、“联系我”和“音乐播放”移动到页面底部 -->
-<div class="bottom-section">
-    <div id="about-section" class="modal">
+    <!-- 弹窗内容 -->
+    <div id="about-modal" class="modal">
         <div class="modal-content">
             <span class="close" id="about-close-btn">&times;</span>
             <h2>关于我</h2>
@@ -266,22 +200,30 @@
             <p>QQ：3572653147</p>
         </div>
     </div>
-
-    <div id="video-section" class="modal">
+    <div id="gallery-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="gallery-close-btn">&times;</span>
+            <h2>图片展示</h2>
+            <div class="gallery">
+                <img src="https://via.placeholder.com/200x150" alt="图片1">
+                <img src="https://via.placeholder.com/200x150" alt="图片2">
+                <img src="https://via.placeholder.com/200x150" alt="图片3">
+            </div>
+        </div>
+    </div>
+    <div id="video-modal" class="modal">
         <div class="modal-content">
             <span class="close" id="video-close-btn">&times;</span>
-            <h2>视频播放(开发中...)</h2>
+            <h2>视频播放</h2>
             <div class="video-section">
                 <video controls>
                     <source src="https://example.com/video1.mp4" type="video/mp4">
                     你的浏览器不支持视频播放。
                 </video>
             </div>
-            <p>如果视频无法播放，请确保视频文件是H.264编码格式。</p>
         </div>
     </div>
-
-    <div id="contact-section" class="modal">
+    <div id="contact-modal" class="modal">
         <div class="modal-content">
             <span class="close" id="contact-close-btn">&times;</span>
             <h2>联系我</h2>
@@ -296,88 +238,125 @@
                 <input type="file" id="file" name="file"><br><br>
                 <button type="submit">提交</button>
             </form>
-            <p>下载文件：<a href="https://example.com/download" download>点击下载</a></p>
         </div>
     </div>
-
-    <div id="music-section" class="modal">
+    <div id="music-modal" class="modal">
         <div class="modal-content">
             <span class="close" id="music-close-btn">&times;</span>
             <h2>音乐播放</h2>
             <div class="music-section">
-                <audio controls>
-                    <source src="https://example.com/music1.mp3" type="audio/mpeg">
-                    你的浏览器不支持音频播放。
-                </audio>
+                <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=35288285&auto=1&height=66"></iframe>
             </div>
-            <p>如果音乐无法播放，请确保音频文件是MP3格式。</p>
         </div>
     </div>
-</div>
-
-<footer>
-    <p>&copy; 2025 SYSTEM-LEGSP-CPD归所有</p>
-</footer>
-
-<script>
-    document.getElementById("about-btn").addEventListener("click", function() {
-        document.getElementById("about-modal").style.display = "block";
-    });
-    document.getElementById("gallery-btn").addEventListener("click", function() {
-        document.getElementById("gallery-modal").style.display = "block";
-    });
-    document.getElementById("video-btn").addEventListener("click", function() {
-        document.getElementById("video-modal").style.display = "block";
-    });
-    document.getElementById("contact-btn").addEventListener("click", function() {
-        document.getElementById("contact-modal").style.display = "block";
-    });
-    document.getElementById("music-btn").addEventListener("click", function() {
-        document.getElementById("music-modal").style.display = "block";
-    });
-
-    document.querySelectorAll(".close").forEach(function(closeBtn) {
-        closeBtn.addEventListener("click", function() {
-            this.parentElement.parentElement.style.display = "none";
+    <div id="essay-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="essay-close-btn">&times;</span>
+            <h2>作文编辑区</h2>
+            <textarea id="essay-textarea" placeholder="在这里写你的作文..."></textarea>
+        </div>
+    </div>
+    <div id="team-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="team-close-btn">&times;</span>
+            <h2>制作人员名单</h2>
+            <p><strong>LEGSP-CPD</strong><br>B站: <a href="https://space.bilibili.com/1614911881?spm_id_from=333.1007.0.0" target="_blank">1614911881</a></p>
+            <p><strong>其他人员</strong><br>GitHub: <a href="https://github.com/SYSTEM-LEGSP-CPD/LEGSP" target="_blank">SYSTEM-LEGSP-CPD</a></p>
+        </div>
+    </div>
+    <div id="download-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="download-close-btn">&times;</span>
+            <h2>下载</h2>
+            <p>示例文件<br><a href="https://example.com/download-file" download>点击下载</a></p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            var popup = document.getElementById('popup-menu');
+            popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
         });
-    });
 
-    window.onload = function() {
-        document.getElementById("welcome-modal").style.display = "block";
-    };
-
-    window.onclick = function(event) {
-        if (event.target.classList.contains("modal")) {
-            event.target.style.display = "none";
-        }
-    };
-
-    // MP4Box 示例
-    document.getElementById("mp4box-parse-btn").addEventListener("click", function() {
-        const fileInput = document.getElementById("mp4box-file");
-        const file = fileInput.files[0];
-        if (!file) {
-            alert("请选择一个MP4文件！");
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const arrayBuffer = event.target.result;
-            const mp4boxOutput = document.getElementById("mp4box-output");
-
-            MP4Box.createFile(arrayBuffer, function(file) {
-                mp4boxOutput.innerHTML = `<p>文件解析成功！</p>`;
-                mp4boxOutput.innerHTML += `<p>文件名：${file.name}</p>`;
-                mp4boxOutput.innerHTML += `<p>时长：${file.duration}秒</p>`;
-                mp4boxOutput.innerHTML += `<p>视频轨道：${file.videoTracks.length}</p>`;
-                mp4boxOutput.innerHTML += `<p>音频轨道：${file.audioTracks.length}</p>`;
-            }, function(error) {
-                mp4boxOutput.innerHTML = `<p>文件解析失败：${error}</p>`;
-            });
+        window.onclick = function(event) {
+            if (!event.target.matches('#menu-toggle')) {
+                var popup = document.getElementById('popup-menu');
+                if (popup.style.display === 'block') {
+                    popup.style.display = 'none';
+                }
+            }
         };
-        reader.readAsArrayBuffer(file);
-    });
-</script>
+
+        document.getElementById('about-link').addEventListener('click', function() {
+            document.getElementById('about-modal').style.display = 'block';
+        });
+        document.getElementById('gallery-link').addEventListener('click', function() {
+            document.getElementById('gallery-modal').style.display = 'block';
+        });
+        document.getElementById('video-link').addEventListener('click', function() {
+            document.getElementById('video-modal').style.display = 'block';
+        });
+        document.getElementById('contact-link').addEventListener('click', function() {
+            document.getElementById('contact-modal').style.display = 'block';
+        });
+        document.getElementById('music-link').addEventListener('click', function() {
+            document.getElementById('music-modal').style.display = 'block';
+        });
+        document.getElementById('essay-link').addEventListener('click', function() {
+            document.getElementById('essay-modal').style.display = 'block';
+        });
+        document.getElementById('team-link').addEventListener('click', function() {
+            document.getElementById('team-modal').style.display = 'block';
+        });
+        document.getElementById('download-link').addEventListener('click', function() {
+            document.getElementById('download-modal').style.display = 'block';
+        });
+
+        document.querySelectorAll('.close').forEach(function(closeBtn) {
+            closeBtn.addEventListener('click', function() {
+                this.parentElement.parentElement.style.display = 'none';
+            });
+        });
+
+        // 日期和时间显示
+        function Year_Month(){ 
+            var now = new Date(); 
+            var yy = now.getFullYear(); 
+            var mm = now.getMonth() + 1; 
+            return(yy + '年' + mm + '月'); 
+        } 
+
+        function Date_of_Today(){ 
+            var now = new Date(); 
+            return(now.getDate() + '<b>日</b>'); 
+        } 
+
+        function Day_of_Today(){ 
+            var day = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]; 
+            var now = new Date(); 
+            return(day[now.getDay()]); 
+        } 
+
+        function CurentTime(){ 
+            var now = new Date(); 
+            var hh = now.getHours(); 
+            var mm = now.getMinutes(); 
+            var ss = now.getSeconds(); 
+            var clock = hh + ':'; 
+            if (mm < 10) clock += '0'; 
+            clock += mm + ':'; 
+            if (ss < 10) clock += '0'; 
+            clock += ss; 
+            return(clock); 
+        } 
+
+        function refreshCalendarClock(){ 
+            document.getElementById('calendarClock1').innerHTML = Year_Month(); 
+            document.getElementById('calendarClock2').innerHTML = Date_of_Today(); 
+            document.getElementById('calendarClock3').innerHTML = Day_of_Today(); 
+            document.getElementById('calendarClock4').innerHTML = CurentTime(); 
+        } 
+
+        setInterval(refreshCalendarClock, 1000);
+    </script>
 </body>
 </html>
